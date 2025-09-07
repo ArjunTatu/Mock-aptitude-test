@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You</title>
+  <link rel="stylesheet" href="thankyou.css">
+  <link rel="manifest" href="manifest.json">
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+  }
+</script>
+
+</head>
+<body>
+  <div class="thankyou-container">
+    <h1>Thank You!</h1>
+    <p>Your responses have been successfully submitted.<br>
+       Redirecting you to home in <span id="countdown">5</span> seconds...</p>
+    <a href="index.html" class="btn">Go to Home</a>
+  </div>
+
+  <script src="thankyou.js"></script>
+</body>
+</html>

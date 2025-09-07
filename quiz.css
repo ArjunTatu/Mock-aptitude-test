@@ -1,0 +1,360 @@
+/* 1. Global Styles & CSS Variables */
+:root {
+  --primary-color: #007bff;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --secondary-color: #6c757d;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --text-color: #212529;
+  --border-color: #dee2e6;
+  --background-color: #eef2f3; /* Fixed background */
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--background-color); /* fixed, no animation */
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Header */
+header {
+  background: var(--primary-color);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* 4. Main Container */
+.main-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+  .main-container {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}
+
+/* 5. Panel & Cards */
+.panel {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+/* Instructions */
+.instructions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.instructions-container ul {
+  text-align: left;
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.instructions-container li {
+  margin-bottom: 0.5rem;
+}
+
+/* Quiz container */
+.quiz-container { display: none; }
+.sidebar { display: none; }
+
+@media (min-width: 10px) {
+  .sidebar { display: flex; flex-direction: column; }
+}
+
+/* Quiz header */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.countdown {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--danger-color);
+}
+
+/* Question Navigation (responsive) */
+.question-nav {
+  margin-top: auto;
+  display: grid;
+  gap: 0.8rem; /* increase the gap between buttons */
+  justify-content: start;
+
+  /* Mobile default: small buttons */
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+}
+
+@media (min-width: 992px) {
+  .question-nav {
+    gap: 1rem; /* more gap on larger screens */
+  }
+}
+
+
+.nav-btn {
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  background: var(--light-color);
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+/* Tablet: slightly bigger buttons */
+@media (min-width: 600px) {
+  .nav-btn {
+    min-width: 45px;
+    min-height: 45px;
+    font-size: 1rem;
+  }
+}
+
+/* Desktop: larger buttons */
+@media (min-width: 992px) {
+  .nav-btn {
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Current question */
+.nav-btn.active { 
+  background: var(--primary-color); 
+  color: white; 
+  border-color: var(--primary-color); 
+}
+
+/* Answered question */
+.nav-btn.answered { 
+  background: var(--success-color); 
+  color: white; 
+  border-color: var(--success-color); 
+}
+
+
+/* Options */
+.option {
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.option:hover { background: var(--light-color); }
+
+.option input[type="radio"] { display: none; }
+
+.option .radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  margin-right: 12px;
+  display: inline-block;
+  position: relative;
+}
+
+.option input[type="radio"]:checked + .radio-custom {
+  border-color: var(--primary-color);
+}
+
+.option input[type="radio"]:checked + .radio-custom::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Loader */
+.spinner {
+  margin: 0 auto;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.98); }
+
+.btn-primary { background: var(--primary-color); color: white; }
+.btn-secondary { background: var(--secondary-color); color: white; }
+.btn-success { background: var(--success-color); color: white; }
+.btn-danger { background: var(--danger-color); color: white; }
+
+/* Controls layout */
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Webcam */
+.webcam-container {
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  width: 90%;
+  max-width: 350px;
+  text-align: center;
+  display: none;
+}
+
+.webcam-container h4 { margin-bottom: 0.75rem; }
+
+video {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+}
+
+/* 6. toast */
+#toastContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 0.3s forwards, fadeOut 0.5s forwards 3s;
+}
+
+.toast.success { background: #28a745; }
+.toast.error { background: #dc3545; }
+.toast.warning { background: #ffc107; color: #000; }
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(20px); }
+}
+
+/* 7. Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal .btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-primary { background: #007bff; color: white; }
+.btn-secondary { background: #ccc; }
